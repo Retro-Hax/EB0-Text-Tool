@@ -34,12 +34,16 @@ namespace TextPacker
         {
             //Check as a full path
             if (File.Exists(romPath))
+            {
                 return romPath;
+            }
 
             //Check as [Current Directory]/romPath
             var longPath = Path.Combine(Directory.GetCurrentDirectory(), romPath);
             if (File.Exists(longPath))
+            {
                 return longPath;
+            }
 
             return "ERROR! Couldn't find " + romPath;
         }

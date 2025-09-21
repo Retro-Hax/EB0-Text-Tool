@@ -18,7 +18,9 @@ namespace TextPacker
 
             var result = new List<byte>();
             foreach (var offset in offsets)
+            {
                 result.AddRange(CalculatePointer(offset));
+            }
 
             return result.ToArray();
         }
@@ -37,7 +39,9 @@ namespace TextPacker
 
                 var remainingFreeSpace = SCRIPT_TEXTBANK_END - currentOffset;
                 if (remainingFreeSpace < 0)
+                {
                     throw new Exception("The script text bank is full! If it kept going, the pointers would wrap back around and it wouldn't work.");
+                }
             }
 
             return offsets;
@@ -48,7 +52,9 @@ namespace TextPacker
             //offset -= ROM_IO.iNES_HEADER_LENGTH;
 
             if (offset < NAMES_TEXTBANK_END)
+            {
                 offset += 0x8000;
+            }
 
             var result = BitConverter.GetBytes(offset);
             return new byte[] { result[0], result[1], 0x00 };

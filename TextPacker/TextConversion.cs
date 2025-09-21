@@ -81,8 +81,10 @@ namespace TextPacker
                         continue;
                     }
 
-                    if (ROM[currentOffset] == 0x00)
+                    if (ROM[currentOffset] == 0x00
+                    {
                         messageComplete = true;
+                    }
 
                     currentOffset++;
                 } while (messageComplete == false);
@@ -330,7 +332,9 @@ namespace TextPacker
                 foreach (var letter in line)
                 {
                     if (letter == '[')
+                    {
                         currentControlCode = "["; //start building a control code)
+                    }
 
                     if (currentControlCode != string.Empty)
                     {
@@ -505,7 +509,9 @@ namespace TextPacker
             var result = input.TrimStart('[').TrimEnd(']').Trim();
 
             if (result.StartsWith("0x"))
+            {
                 result = result.Remove(0, 2);
+            }
 
             return result;
         }
@@ -513,13 +519,17 @@ namespace TextPacker
         private static bool CompareArrays(byte[] firstArray, byte[] secondArray)
         {
             if (firstArray.Length != secondArray.Length)
+            {
                 return false;
+            }
 
             //There's gotta be a better way to do this. Array.Equals and normal == doesn't ever return true
             for (int i = 0; i < firstArray.Length; i++)
             {
                 if (firstArray[i] != secondArray[i])
+                {
                     return false;
+                }
             }
             return true;
         }

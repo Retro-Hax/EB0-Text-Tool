@@ -7,7 +7,7 @@ namespace TextPacker
     {
         static void Main(string[] args)
         {
-            var debugMode = true;
+            var debugMode = false;
             var debugPath = @"C:\Users\vincents\Desktop\Git repos\EB0-Text-Tool\Test.nes";
 
             var romPath = string.Empty;
@@ -16,9 +16,13 @@ namespace TextPacker
             if (args.Length == 0)
             {
                 //TODO: Use the last ROM path? y/n
+                //TODO: Make ROMs with Spaces not make the Program Error/Crash
+                //TODO: Add Warning Text if Wrong ROM is loaded instead of Crash/Error (Program not Compatible with Mother Famicom ROM Image!)
 
                 if (debugMode)
+                {
                     romPath = debugPath;
+                }
                 else
                 {
                     //If nothing comes up, ask for a filename
@@ -45,13 +49,16 @@ namespace TextPacker
                 Console.WriteLine("Loading text pointer table...");
 
                 var textPointers = ROM_IO.LoadTextPointerTable(ROM);
-                if (debugMode) PrintPointers(textPointers);
+                if (debugMode)
+                {
+                    PrintPointers(textPointers);
+                }
 
                 var script = TextConversion.LoadScript(ROM, textPointers);
-                if (debugMode) PrintScript(script);
-
-
-
+                if (debugMode)
+                {
+                    PrintScript(script);
+                }
             }
             else
             {
@@ -80,8 +87,14 @@ namespace TextPacker
             var currentPrintColumn = 0;
             foreach (var pointer in textPointers)
             {
-                if (pointer == 0x060000) Console.Write("------ "); //there's a surprising amount of unused pointer table entries
-                else Console.Write(pointer.ToString("X6") + ' ');
+                if (pointer == 0x060000)
+                {
+                    Console.Write("------ "); //there's a surprising amount of unused pointer table entries
+                }
+                else
+                {
+                    Console.Write(pointer.ToString("X6") + ' ');
+                }
 
                 currentPrintColumn += 1;
                 if (currentPrintColumn == 16)
